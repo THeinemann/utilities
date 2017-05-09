@@ -16,6 +16,12 @@
 
 program=$1
 
+if [ ! $program ]
+then
+    >&2 echo No program given!
+    exit 1
+fi
+
 function cutword() {
     cut -f 1 -d " "
 }
