@@ -1,0 +1,18 @@
+#!/bin/bash
+
+program=$1
+
+function cutword() {
+    cut -f 1 -d " "
+}
+
+if pidof $program
+then
+    pid=`pidof $program | cutword`
+
+    window=`wmctrl -lp | grep -P "0x[0-9a-f]+\s+-?[0-9]+\s+${pid}" | cutword`
+    
+    wmctrl -i -a $window
+else
+    $@
+fi
