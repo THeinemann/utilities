@@ -22,7 +22,7 @@ then
     exit 1
 fi
 
-function cutword() {
+cutword() {
     cut -f 1 -d " "
 }
 
