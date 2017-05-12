@@ -13,7 +13,7 @@ Utility to either focus a program on an x-window system if it is already started
 
 The script depends on `wmctrl`, which need to be installed on the target system.
 
-If the program is started by the script, if runs in the background to have a similar experience to the case when the
+If the program is started by the script, it runs in the background to have a similar experience to the case when the
 program is not started.
 
 ### Usage
