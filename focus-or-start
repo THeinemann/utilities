@@ -34,5 +34,5 @@ then
 
     wmctrl -i -a $window
 else
-    $@
+    $@ &
 fi
