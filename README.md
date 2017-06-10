@@ -35,7 +35,7 @@ where
  * `-f FILE`     Specifies a file to process. If not given, `<TARGET>.txt` (from the target name, see above) is used if it exists; if this file does not exist, `resize.txt` is used. If resize.txt file does
 not exist either, then all files matching `*.JPG` or `*.jpg` are processed.
  * `-f` Prints this help text and exits.
- * `-s SIZE` Resizes the images to the specified size. SIZE must be in the form <WIDTH>x<HEIGHT>. Default is `2048x1536`.
+ * `-s SIZE` Resizes the images to the specified size. `SIZE` must be in the form `<WIDTH>x<HEIGHT>`. Default is `2048x1536`.
 
 ### Dependencies
 To resize the images, the `convert` command of [imagemagick](https://www.imagemagick.org/) is used.
