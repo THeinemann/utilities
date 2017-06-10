@@ -46,7 +46,7 @@ checkSize() {
 
 }
 
-printHelp() {
+printHelpAndExit() {
     echo "$(basename $0) - Resize several images in a batch"
     echo ""
     echo "Usage: $(basename $0) [-S SOURCE] [-T TARGET] [-f FILE] [-s SIZE] [-h]"
@@ -75,8 +75,8 @@ do
         S)  SOURCE=$OPTARG;;
         T)  TARGET=$OPTARG;;
         v)  echo "Option -v is not supported yet.";;
-        h)  printHelp 0;;
-        ?)  printHelp 1;;
+        h)  printHelpAndExit 0;;
+        ?)  printHelpAndExit 1;;
     esac
 done
 
