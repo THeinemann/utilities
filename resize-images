@@ -4,6 +4,8 @@
 SOURCE="$PWD"
 TARGET="Publish"
 
+size="2048x1536"
+
 pushd $PWD
 
 pushd () {
@@ -19,17 +21,31 @@ abort() {
     exit 1
 }
 
+checkSize() {
+    size=$1
+    if ! ( echo $size | grep -P "^[0-9]+x[0-9]+$" -q )
+    then
+        >&2 echo "$size is not a valid size specification."
+        >&2 echo "Must be of format <WIDTH>x<HEIGHT>, e.g. 2048x1536"
+        abort
+    fi
+
+}
+
 printHelp() {
     echo "$(basename $0) - Resize several images in a batch"
     echo ""
-    echo "Usage: $(basename $0) [-S SOURCE] [-T TARGET] [-f FILE] [-h]"
+    echo "Usage: $(basename $0) [-S SOURCE] [-T TARGET] [-f FILE] [-s SIZE] [-h]"
     echo ""
+    echo "Options:"
     echo " -S SOURCE   Specifies the source folder to read from. Default is the current directory."
     echo " -T TARGET   Specifies the target directory. Default is \"Publish\""
     echo " -f FILE     Specifies a file to process. If not given, <TARGET>.txt (from the target name, see above)"
     echo "             is used if it exists; if this file does not exist, resize.txt is used. If resize.txt file does"
     echo "             not exist either, then all files matching *.JPG or *.jpg are processed."
     echo " -f          Prints this help text and exits."
+    echo " -s SIZE     Resizes the images to the specified size. SIZE must be in the form <WIDTH>x<HEIGHT>."
+    echo "             Default is 2048x1536."
 
     popd
     exit $1
@@ -40,12 +56,13 @@ do
     case $opt in
         f)  customFileParam=$OPTARG
             customFile=$(realpath $customFileParam);;
-        s) echo "Option -s $OPTARG is not supported yet.";;
-        S) SOURCE=$OPTARG;;
-        T) TARGET=$OPTARG;;
-        v) echo "Option -v";;
-        h) printHelp 0;;
-        ?) printHelp 1;;
+        s)  size=$OPTARG
+            checkSize $size;;
+        S)  SOURCE=$OPTARG;;
+        T)  TARGET=$OPTARG;;
+        v)  echo "Option -v is not supported yet.";;
+        h)  printHelp 0;;
+        ?)  printHelp 1;;
     esac
 done
 
@@ -88,7 +105,7 @@ fi
 for i in $FILES
 do
     echo Verkleinere $i
-    convert $i -resize 2048x1536 $TARGET/$i
+    convert $i -resize $size $TARGET/$i
 done
 
 popd
