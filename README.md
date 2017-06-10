@@ -19,29 +19,23 @@ The script depends on [wmctrl](https://sites.google.com/site/tstyblo//wmctrl/), 
 
 ### Usage
     focus-or-start PROGRAM [ARGS...]
-Where
+where
 * `PROGRAM` is the path of the program to start
-* `ARGS` are possible arguments to the program. They will only be evaluated if the program is started by
-  `focus-or-start`; if the program is already running, they will be ignored.
+* `ARGS` are possible arguments to the program. They will only be evaluated if the program is started by `focus-or-start`; if the program is already running, they will be ignored.
 
 ## resize-images
 Batch script to resize images in a directory. Puts the resized images into a sub directory.
 
-The script will read image filenames to process from a file, or process all image files in the current directory if
-none is specified.
-
 ### Usage
-    resize-images [SOURCE [TARGET]]
+    resize-images [-S SOURCE] [-T TARGET] [-f FILE] [-s SIZE] [-h]
 
-The script will process image files in the `SOURCE` directory; if `SOURCE` is not given, the current working directory
-is used. Resized images will be put into the `TARGET` directory. If `TARGET` is not specified, `Publish` is used as
-default target.
-
-`resize-images` will process all images, unless either `TARGET.txt` (using the `TARGET` specified in the command line)
-or `resize.txt` exists. In this case, the respective file is processed, where each line is interpreted as a file name
-in the `SOURCE` directory.
-
-Images are always resized to the format `2048x1536`. Currently, it is not possible to specify other formats.
+where
+ * `-S SOURCE` Specifies the source folder to read from. Default is the current directory.
+ * `-T TARGET`   Specifies the target directory. Default is `Publish`
+ * `-f FILE`     Specifies a file to process. If not given, `<TARGET>.txt` (from the target name, see above) is used if it exists; if this file does not exist, `resize.txt` is used. If resize.txt file does
+not exist either, then all files matching `*.JPG` or `*.jpg` are processed.
+ * `-f` Prints this help text and exits.
+ * `-s SIZE` Resizes the images to the specified size. SIZE must be in the form <WIDTH>x<HEIGHT>. Default is `2048x1536`.
 
 ### Dependencies
 To resize the images, the `convert` command of [imagemagick](https://www.imagemagick.org/) is used.
