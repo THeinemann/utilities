@@ -3,7 +3,8 @@
 .PHONY: all install
 
 
-files=focus-or-start
+files=focus-or-start \
+		resize-images
 
 prefix=/usr/local
 
