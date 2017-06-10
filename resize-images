@@ -3,6 +3,7 @@
 SOURCE="$1"
 TARGET="${2:-Publish}"
 
+pushd $PWD
 cd "$SOURCE"
 if [ $? -ne 0 ]
 then
@@ -37,3 +38,5 @@ do
     echo Verkleinere $i
     convert $i -resize 2048x1536 $TARGET/$i
 done
+
+popd
