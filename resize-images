@@ -1,14 +1,35 @@
 #!/bin/sh
 
-SOURCE="$1"
-TARGET="${2:-Publish}"
+# Variable initialization
+SOURCE="$PWD"
+TARGET="Publish"
 
 pushd $PWD
+
+abort() {
+    popd
+    exit 1
+}
+
+while getopts f:s:S:T:vh opt
+do
+    case $opt in
+        f)  customFileParam=$OPTARG
+            customFile=$(realpath $customFileParam);;
+        s) echo "Option -s $OPTARG is not supported yet.";;
+        S) SOURCE=$OPTARG;;
+        T) TARGET=$OPTARG;;
+        v) echo "Option -v";;
+        h) echo "Option -h is not supported yet.";;
+        ?) abort
+    esac
+done
+
 cd "$SOURCE"
 if [ $? -ne 0 ]
 then
     echo Beende...
-    exit
+    abort
 fi
 
 if [ ! -d "$TARGET" ]
@@ -17,20 +38,27 @@ then
     if [ $? -ne 0 ]
     then
 	echo Beende...
-	exit
+	abort
     fi
 fi
 
-if [ -f $TARGET.txt ]
+if [ $customFileParam ]
+then
+    if [ -f $customFile ]
+    then
+        FILES=$(cat $customFile)
+    else
+        >&2 echo $customFileParam does not exist or is not a file.
+        abort
+    fi
+elif [ -f $TARGET.txt ]
 then
     FILES=$(cat $TARGET.txt)
-else
-if [ -f resize.txt ]
+elif [ -f resize.txt ]
 then
     FILES=$(cat resize.txt)
 else
     FILES="*.JPG *.jpg"
-fi
 fi
 
 for i in $FILES
