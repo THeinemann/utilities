@@ -6,9 +6,33 @@ TARGET="Publish"
 
 pushd $PWD
 
+pushd () {
+    command pushd "$@" > /dev/null
+}
+
+popd () {
+    command popd "$@" > /dev/null
+}
+
 abort() {
     popd
     exit 1
+}
+
+printHelp() {
+    echo "$(basename $0) - Resize several images in a batch"
+    echo ""
+    echo "Usage: $(basename $0) [-S SOURCE] [-T TARGET] [-f FILE] [-h]"
+    echo ""
+    echo " -S SOURCE   Specifies the source folder to read from. Default is the current directory."
+    echo " -T TARGET   Specifies the target directory. Default is \"Publish\""
+    echo " -f FILE     Specifies a file to process. If not given, <TARGET>.txt (from the target name, see above)"
+    echo "             is used if it exists; if this file does not exist, resize.txt is used. If resize.txt file does"
+    echo "             not exist either, then all files matching *.JPG or *.jpg are processed."
+    echo " -f          Prints this help text and exits."
+
+    popd
+    exit $1
 }
 
 while getopts f:s:S:T:vh opt
@@ -20,8 +44,8 @@ do
         S) SOURCE=$OPTARG;;
         T) TARGET=$OPTARG;;
         v) echo "Option -v";;
-        h) echo "Option -h is not supported yet.";;
-        ?) abort
+        h) printHelp 0;;
+        ?) printHelp 1;;
     esac
 done
 
