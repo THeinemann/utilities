@@ -15,7 +15,7 @@ If the program is started by the script, it runs in the background to have a sim
 program is not started.
 
 ### Dependencies
-The script depends on `wmctrl`, which need to be installed on the target system.
+The script depends on [wmctrl](https://sites.google.com/site/tstyblo//wmctrl/), which need to be installed on the target system.
 
 ### Usage
     focus-or-start PROGRAM [ARGS...]
