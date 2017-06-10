@@ -1,0 +1,39 @@
+#!/bin/sh
+
+SOURCE="$1"
+TARGET="${2:-Publish}"
+
+cd "$SOURCE"
+if [ $? -ne 0 ]
+then
+    echo Beende...
+    exit
+fi
+
+if [ ! -d "$TARGET" ]
+then
+    mkdir "$TARGET"
+    if [ $? -ne 0 ]
+    then
+	echo Beende...
+	exit
+    fi
+fi
+
+if [ -f $TARGET.txt ]
+then
+    FILES=$(cat $TARGET.txt)
+else
+if [ -f resize.txt ]
+then
+    FILES=$(cat resize.txt)
+else
+    FILES="*.JPG *.jpg"
+fi
+fi
+
+for i in $FILES
+do
+    echo Verkleinere $i
+    convert $i -resize 2048x1536 $TARGET/$i
+done

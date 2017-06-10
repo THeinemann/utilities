@@ -22,3 +22,6 @@ Where
 * `PROGRAM` is the path of the program to start
 * `ARGS` are possible arguments to the program. They will only be evaluated if the program is started by
   `focus-or-start`; if the program is already running, they will be ignored.
+
+## resize-images
+Batch script to resize images in a directory. Puts the resized images into a sub directory
