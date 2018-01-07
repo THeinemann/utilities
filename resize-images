@@ -20,8 +20,6 @@ TARGET="Publish"
 
 size="2048x1536"
 
-pushd $PWD
-
 pushd () {
     command pushd "$@" > /dev/null
 }
@@ -29,6 +27,8 @@ pushd () {
 popd () {
     command popd "$@" > /dev/null
 }
+
+pushd "$PWD"
 
 abort() {
     popd
